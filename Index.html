@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>eFootball Kenya - Squad Market</title>
+
+<style>
+:root{
+  --blue:#0751e8;
+  --yellow:#ffe000;
+  --green:#00ed91;
+  --dark:#030919;
+  --panel:#0c1b38;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;background:var(--dark);color:#fff;
+  font-family:Arial,sans-serif;
+}
+button,input,select,textarea{font:inherit}
+button,a{cursor:pointer}
+.hidden{display:none!important}
+
+/* WELCOME / LOGIN SCREEN */
+#loginScreen{
+  position:fixed;inset:0;z-index:1000;
+  display:flex;align-items:center;justify-content:center;
+  padding:20px;overflow:auto;
+  background:
+   linear-gradient(90deg,rgba(0,8,30,.88),rgba(0,20,65,.58)),
+   url("https://thumb.wikimedia.org/wikipedia/commons/thumb/1/1a/Lionel_Messi_Argentina_v_Egypt_7_July_2026-218.jpg/1280px-Lionel_Messi_Argentina_v_Egypt_7_July_2026-218.jpg")
+   center/cover no-repeat;
+}
+.loginBox{
+  width:100%;max-width:420px;text-align:center;
+  padding:30px 22px;border-radius:20px;
+  background:rgba(3,12,35,.91);
+  border:2px solid var(--yellow);
+  box-shadow:0 0 35px #005aff65;
+}
+.logo{font-size:26px;font-weight:900;line-height:1.4}
+.logo span{color:var(--yellow)}
+.kenya{color:var(--green)}
+.loginBox h1{
+  color:var(--yellow);font-size:31px;
+  margin:20px 0 10px;
+}
+.loginBox p{line-height:1.7;color:#dce8ff}
+.field{
+  display:block;width:100%;padding:13px;
+  color:white;background:#071631;
+  border:1px solid #3267c8;border-radius:8px;
+  margin:12px 0;
+}
+.btn{
+  display:inline-block;border:0;border-radius:8px;
+  padding:12px 17px;background:var(--yellow);
+  color:#071027;font-weight:900;text-decoration:none;
+  margin:5px 3px;
+}
+.btnGreen{background:var(--green)}
+.full{width:100%;margin:8px 0}
+.small{font-size:12px;color:#bdcce5;line-height:1.7}
+
+/* HEADER AND NAVIGATION */
+header{
+  padding:17px 12px;text-align:center;
+  background:linear-gradient(120deg,#0036b8,#0867df,#008c57);
+  border-bottom:4px solid var(--yellow);
+}
+header h2{margin:0;font-size:25px}
+header span{color:var(--yellow)}
+header p{font-size:12px;margin-bottom:0}
+nav{
+  display:flex;justify-content:center;gap:17px;
+  flex-wrap:wrap;background:#071329;padding:15px;
+}
+nav a{color:white;text-decoration:none;font-size:12px;font-weight:bold}
+nav a:hover{color:var(--yellow)}
+
+/* HERO */
+.hero{
+  padding:40px 15px;text-align:center;
+  background:
+   linear-gradient(90deg,rgba(0,9,35,.83),rgba(0,20,75,.68)),
+   url("https://thumb.wikimedia.org/wikipedia/commons/thumb/1/1a/Lionel_Messi_Argentina_v_Egypt_7_July_2026-218.jpg/1280px-Lionel_Messi_Argentina_v_Egypt_7_July_2026-218.jpg")
+   center 38%/cover;
+  border-bottom:2px solid var(--yellow);
+}
+.hero h1{font-size:35px;margin:5px}
+.hero h1 span{color:var(--yellow)}
+.hero p{line-height:1.8}
+.section{max-width:1100px;margin:auto;padding:27px 14px}
+.heading{text-align:center;margin-bottom:22px}
+.heading h2{color:var(--yellow);font-size:24px}
+.heading p{color:#bdcce5;font-size:13px}
+
+/* INPUTS */
+input,select,textarea{
+  width:100%;padding:12px;
+  border:1px solid #3159a0;border-radius:8px;
+  color:white;background:#06132c;margin:5px 0 12px;
+}
+label{display:block;color:#dce7fa;font-size:13px;margin-top:8px}
+input[type=checkbox]{width:auto}
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:15px;
+}
+
+/* SQUAD PHOTOS AND LISTINGS */
+.card{
+  background:var(--panel);border:1px solid #2553a3;
+  border-radius:12px;overflow:hidden;
+}
+.card img{
+  width:100%;height:180px;object-fit:cover;
+  background:#10254a;display:block;
+}
+.cardBody{padding:14px}
+.card h3{margin:5px 0 9px}
+.tag{
+  display:inline-block;background:#133d87;color:white;
+  border-radius:5px;padding:5px 8px;margin:2px;
+  font-size:11px;
+}
+.strength{font-size:20px;font-weight:bold;color:var(--yellow)}
+.price{font-size:23px;font-weight:bold;color:var(--green);margin:12px 0}
+.card p{font-size:13px;line-height:1.6;color:#c9d6ed}
+.panel{
+  padding:18px;background:var(--panel);
+  border:1px solid #2553a3;border-radius:13px;
+}
+.formGrid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.preview{width:100%;max-height:220px;object-fit:contain}
+.review{
+  background:#102348;border:1px solid #244b91;
+  padding:14px;border-radius:10px;margin:12px 0;
+  overflow-wrap:anywhere;
+}
+.review strong{color:var(--yellow)}
+footer{
+  background:#020611;text-align:center;padding:25px 12px;
+  font-size:12px;line-height:1.8;color:#bac9e3;
+}
+footer a{color:var(--green)}
+@media(max-width:480px){
+  .hero h1{font-size:27px}
+  .formGrid{grid-template-columns:1fr}
+  nav{gap:12px}
+}
+</style>
+</head>
+
+<body>
+
+<!-- WELCOME SCREEN -->
+<section id="loginScreen">
+  <form class="loginBox" id="loginForm">
+    <div class="logo">eFOOTBALL <span>KENYA 🇰🇪</span></div>
+    <h1>WELCOME TO eFOOTBALL!</h1>
+    <p>
+      ⚽ Discover Epic squads, meet other players,
+      buy and sell squad-building services.
+    </p>
+    <label for="loginName">Enter your player nickname</label>
+    <input class="field" id="loginName" maxlength="30"
+      placeholder="Your nickname" required>
+    <button class="btn full" type="submit">ENTER THE SHOP ⚽</button>
+    <p class="small">
+      This is a demo welcome screen, not a secure account-login system.
+      Do not enter your game password.
+    </p>
+    <p class="small">
+      Messi photo: Bryan Berlin / WikiPortraits,
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/"
+         target="_blank" rel="noopener">CC BY-SA 4.0</a>.
+    </p>
+  </form>
+</section>
+
+<!-- MAIN WEBSITE -->
+<div id="app" class="hidden">
+
+<header>
+  <h2>⚽ eFOOTBALL <span>KENYA 🇰🇪</span></h2>
+  <p>EPIC SQUADS • DREAM TEAMS • FIND FRIENDS</p>
+</header>
+
+<nav>
+  <a href="#home">HOME</a>
+  <a href="#market">SQUAD MARKET</a>
+  <a href="#sell">SELL SQUAD</a>
+  <a href="#remarks">REMARKS</a>
+  <a href="#friends">FIND FRIENDS</a>
+  <a href="#contact">CONTACT</a>
+</nav>
+
+<section class="hero" id="home">
+  <h1>BUILD YOUR <span>DREAM TEAM</span></h1>
+  <p>Welcome, <strong id="welcomeName"></strong>! 🎮<br>
+    Browse Epic-player squads, discover high team strength,
+    and connect with other eFootball fans.
+  </p>
+  <a class="btn" href="#market">BROWSE SQUADS</a>
+  <a class="btn btnGreen" href="#sell">SELL YOUR SQUAD</a>
+  <p>
+    <button class="btn" type="button" onclick="logout()">LOG OUT</button>
+  </p>
+</section>
+
+<!-- SQUAD MARKET -->
+<section class="section" id="market">
+  <div class="heading">
+    <h2>🏆 SQUAD MARKETPLACE</h2>
+    <p>Explore squad photos, player details and prices in KSh.</p>
+  </div>
+
+  <input id="search" placeholder="Search Messi, Epic, squad name..."
+    oninput="renderSquads()">
+
+  <select id="strengthFilter" onchange="renderSquads()">
+    <option value="0">All squad strengths</option>
+    <option value="3000">3000+ strength</option>
+    <option value="3200">3200+ strength</option>
+    <option value="3300">3300+ strength</option>
+  </select>
+
+  <div class="grid" id="squadList"></div>
+  <p class="small">
+    Online squad photos are examples only. Confirm the actual players,
+    team strength, platform and offer with the seller before paying.
+  </p>
+</section>
+
+<!-- SELL A SQUAD -->
+<section class="section" id="sell">
+  <div class="heading">
+    <h2>💰 SELL OR ADVERTISE YOUR SQUAD</h2>
+    <p>Create a listing with your real squad details and screenshot.</p>
+  </div>
+
+  <form class="panel" id="sellForm">
+    <label>Squad name</label>
+    <input id="squadName" required maxlength="60"
+      placeholder="e.g. Epic Legends Squad">
+
+    <div class="formGrid">
+      <div>
+        <label>Team strength</label>
+        <input id="teamStrength" type="number"
+          min="1" max="9999" required placeholder="3300">
+      </div>
+      <div>
+        <label>Price (KSh)</label>
+        <input id="squadPrice" type="number"
+          min="1" max="1000000" required placeholder="500">
+      </div>
+      <div>
+        <label>Formation</label>
+        <select id="formation" required>
+          <option value="">Choose formation</option>
+          <option>4-3-3</option>
+          <option>4-2-1-3</option>
+          <option>4-2-2-2</option>
+          <option>3-2-2-3</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div>
+        <label>Platform</label>
+        <select id="platform" required>
+          <option value="">Choose platform</option>
+          <option>Android</option>
+          <option>iPhone / iPad</option>
+          <option>PlayStation</option>
+          <option>PC</option>
+          <option>Xbox</option>
+        </select>
+      </div>
+    </div>
+
+    <label>Epic players and squad details</label>
+    <textarea id="playerDetails" rows="3" maxlength="500" required
+      placeholder="Mention available Epic players, formation, and service offered"></textarea>
+
+    <label>Your WhatsApp number</label>
+    <input id="sellerNumber" type="tel" required
+      placeholder="2547XXXXXXXX"
+      pattern="254[17][0-9]{8}">
+
+    <label>Upload your squad screenshot</label>
+    <input id="squadPhoto" type="file" accept="image/*">
+    <img id="photoPreview" class="preview hidden" alt="Squad preview">
+
+    <p class="small">
+      Use a photo you own or have permission to share. Never send
+      account passwords or verification codes to buyers.
+    </p>
+
+    <label>
+      <input type="checkbox" id="sellerAgree" required>
+      I confirm that my listing is accurate and authorized.
+    </label>
+
+    <button class="btn btnGreen full" type="submit">PUBLISH SQUAD</button>
+    <p class="small" id="sellMessage"></p>
+  </form>
+</section>
+
+<!-- CUSTOMER REMARKS -->
+<section class="section" id="remarks">
+  <div class="heading">
+    <h2>⭐ CUSTOMER REMARKS</h2>
+    <p>Leave a comment, suggestion or rating for the shop.</p>
+  </div>
+
+  <div class="panel">
+    <form id="reviewForm">
+      <label>Your nickname</label>
+      <input id="reviewName" maxlength="30" required>
+
+      <label>Your rating</label>
+      <select id="reviewRating">
+        <option value="5">⭐⭐⭐⭐⭐ Excellent</option>
+        <option value="4">⭐⭐⭐⭐ Very good</option>
+        <option value="3">⭐⭐⭐ Good</option>
+        <option value="2">⭐⭐ Not good</option>
+        <option value="1">⭐ Poor</option>
+      </select>
+
+      <label>Your remarks</label>
+      <textarea id="reviewText" maxlength="400" rows="3" required
+        placeholder="Write your remarks here..."></textarea>
+
+      <button class="btn full" type="submit">SUBMIT REMARK</button>
+    </form>
+
+    <h3 style="color:#ffe000">Customer comments</h3>
+    <div id="reviewList"></div>
+  </div>
+</section>
+
+<!-- FIND FRIENDS -->
+<section class="section" id="friends">
+  <div class="heading">
+    <h2>🤝 eFOOTBALL FRIENDS ZONE</h2>
+    <p>Find players and share public gaming usernames.</p>
+  </div>
+
+  <div class="panel">
+    <form id="friendForm">
+      <label>Your nickname</label>
+      <input id="friendName" maxlength="30" required>
+
+      <label>Public eFootball username or player ID</label>
+      <input id="friendUsername" maxlength="60" required
+        placeholder="Your public game username">
+
+      <label>Platform</label>
+      <select id="friendPlatform" required>
+        <option value="">Choose platform</option>
+        <option>Android</option>
+        <option>iPhone / iPad</option>
+        <option>PlayStation</option>
+        <option>Xbox</option>
+        <option>PC</option>
+      </select>
+
+      <label>Message to other players</label>
+      <textarea id="friendNote" rows="2" maxlength="150"
+        placeholder="e.g. Looking for friendly matches"></textarea>
+
+      <button class="btn btnGreen full" type="submit">
+        ADD MY PROFILE
+      </button>
+    </form>
+
+    <h3 style="color:#ffe000">🎮 PLAYER DIRECTORY</h3>
+    <div id="friendList"></div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="section" id="contact">
+  <div class="heading"><h2>📱 CONTACT THE SHOP</h2></div>
+  <div class="panel" style="text-align:center">
+    <p>Questions about a squad or an order?</p>
+    <a class="btn btnGreen" href="https://wa.me/254119662388"
+      target="_blank" rel="noopener">
+      CHAT ON WHATSAPP
+    </a>
+    <p>WhatsApp: 0119662388</p>
+  </div>
+</section>
+
+<footer>
+  <strong>eFOOTBALL KENYA 🇰🇪</strong><br>
+  Squad marketplace • Gaming friends • Customer remarks<br>
+  Independent fan site. Not affiliated with KONAMI.<br>
+  Messi photo: Bryan Berlin / WikiPortraits,
+  <a href="https://creativecommons.org/licenses/by-sa/4.0/"
+     target="_blank" rel="noopener">CC BY-SA 4.0</a>.<br>
+  Always verify listings and sellers before sending money.
+</footer>
+</div>
+
+<script>
+const SHOP_NUMBER = "254119662388";
+
+const defaultSquads = [
+ {
+  id:"demo1",
+  name:"Epic Legends Squad",
+  power:3261,price:800,
+  formation:"3-3-2-2",platform:"Android",
+  details:"Epic-style team lineup. Check the actual squad details with the seller.",
+  image:"https://pbs.twimg.com/media/HA3qfyObwAAhx_i.jpg",
+  seller:SHOP_NUMBER, sample:true
+ },
+ {
+  id:"demo2",
+  name:"Classic Legends Squad",
+  power:3204,price:500,
+  formation:"4-3-3",platform:"PlayStation",
+  details:"Sample lineup photo featuring special player cards.",
+  image:"https://cdn.dfg.com.br/itemimages/923306525-conta-efootbal-ps4-e-ps5-com-pele-puskas-e-dembele-AMM2.webp",
+  seller:SHOP_NUMBER,sample:true
+ },
+ {
+  id:"demo3",
+  name:"Powerful Epic Squad",
+  power:3197,price:450,
+  formation:"3-2-2-3",platform:"Android",
+  details:"Sample squad lineup. Confirm actual strength and players before purchase.",
+  image:"https://img5.lalafo.com/i/posters/original/9a/42/35/efootball-hesabi-guclu-komanda-v-oyuncu-kolleksiyasi-il-id-98906586-859679470.jpeg",
+  seller:SHOP_NUMBER,sample:true
+ },
+ {
+  id:"demo4",
+  name:"Epic Star Squad",
+  power:3140,price:350,
+  formation:"4-2-1-3",platform:"PlayStation",
+  details:"Example of a team lineup with high-rated player cards.",
+  image:"https://media.karousell.com/media/photos/products/2026/2/8/efootball_pes_2026_account_pel_1770519417_92a43323_progressive.jpg",
+  seller:SHOP_NUMBER,sample:true
+ }
+];
+
+function readStore(key,fallback){
+  try{
+    const v=localStorage.getItem(key);
+    return v===null ? fallback : JSON.parse(v);
+  }catch(e){return fallback}
+}
+
+function saveStore(key,value){
+  try{
+    localStorage.setItem(key,JSON.stringify(value));
+    return true;
+  }catch(e){
+    alert("Browser storage is full. Try a smaller photo or remove old browser data.");
+    return false;
+  }
+}
+
+let squads=readStore("efk_squads",defaultSquads);
+let reviews=readStore("efk_reviews",[]);
+let friends=readStore("efk_friends",[]);
+let selectedPhoto="";
+
+function esc(value){
+  return String(value).replace(/[&<>"']/g,c=>({
+    "&":"&amp;","<":"&lt;",">":"&gt;",
+    '"':"&quot;","'":"&#39;"
+  }[c]));
+}
+
+/* DEMO NICKNAME LOGIN */
+const loginScreen=document.getElementById("loginScreen");
+const app=document.getElementById("app");
+
+function showShop(name){
+  document.getElementById("welcomeName").textContent=name;
+  document.getElementById("loginName").value=name;
+  loginScreen.classList.add("hidden");
+  app.classList.remove("hidden");
+  renderSquads();
+  renderReviews();
+  renderFriends();
+}
+
+document.getElementById("loginForm").addEventListener("submit",e=>{
+  e.preventDefault();
+  const name=document.getElementById("loginName").value.trim();
+  if(!name)return;
+  localStorage.setItem("efk_nickname",name);
+  showShop(name);
+});
+
+function logout(){
+  localStorage.removeItem("efk_nickname");
+  app.classList.add("hidden");
+  loginScreen.classList.remove("hidden");
+  window.scrollTo(0,0);
+}
+
+const savedNickname=localStorage.getItem("efk_nickname");
+if(savedNickname)showShop(savedNickname);
+
+/* SQUAD MARKET */
+function renderSquads(){
+  const q=document.getElementById("search").value.toLowerCase();
+  const min=Number(document.getElementById("strengthFilter").value);
+
+  const filtered=squads.filter(s=>
+    (s.name+" "+s.details+" "+s.formation+" "+s.platform)
+      .toLowerCase().includes(q) && Number(s.power)>=min
+  );
+
+  const list=document.getElementById("squadList");
+  if(!filtered.length){
+    list.innerHTML='<p>No matching squads found. Try another search or browse another strength level.</p>';
+    return;
+  }
+
+  list.innerHTML=filtered.map(s=>`
+    <article class="card">
+      <img src="${esc(s.image)}" alt="${esc(s.name)}"
+           loading="lazy"
+           onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&w=700&q=80'">
+      <div class="cardBody">
+        <span class="tag">${s.sample?"PHOTO EXAMPLE":"SELLER LISTING"}</span>
+        <span class="tag">${esc(s.platform)}</span>
+        <h3>${esc(s.name)}</h3>
+        <div class="strength">⚡ ${Number(s.power)} STRENGTH</div>
+        <p>${esc(s.details)}</p>
+        <p>Formation: ${esc(s.formation)}</p>
+        <div class="price">KSh ${Number(s.price).toLocaleString("en-KE")}</div>
+        <button class="btn full" onclick="buySquad('${esc(s.id)}')">
+          CONTACT SELLER
+        </button>
+      </div>
+    </article>
+  `).join("");
+}
+
+function buySquad(id){
+  const s=squads.find(x=>x.id===id);
+  if(!s)return;
+  const message=`Hello! I am interested in ${s.name}, strength ${s.power}, price KSh ${s.price}. Please confirm the details and availability.`;
+  window.open("https://wa.me/"+s.seller+"?text="+encodeURIComponent(message),"_blank");
+}
+
+/* UPLOAD SQUAD PHOTO */
+document.getElementById("squadPhoto").addEventListener("change",e=>{
+  const file=e.target.files[0];
+  selectedPhoto="";
+  document.getElementById("photoPreview").classList.add("hidden");
+  if(!file)return;
+
+  if(!file.type.startsWith("image/")||file.size>550*1024){
+    alert("Choose an image smaller than 550 KB.");
+    e.target.value="";
+    return;
+  }
+
+  const reader=new FileReader();
+  reader.onload=()=>{
+    selectedPhoto=reader.result;
+    document.getElementById("photoPreview").src=selectedPhoto;
+    document.getElementById("photoPreview").classList.remove("hidden");
+  };
+  reader.readAsDataURL(file);
+});
+
+/* SELL SQUAD */
+document.getElementById("sellForm").addEventListener("submit",e=>{
+  e.preventDefault();
+  const seller=document.getElementById("sellerNumber").value.trim();
+  if(!/^254[17][0-9]{8}$/.test(seller)){
+    alert("Enter a Kenyan WhatsApp number starting with 254.");
+    return;
+  }
+
+  const listing={
+    id:"s"+Date.now(),
+    name:document.getElementById("squadName").value.trim(),
+    power:Number(document.getElementById("teamStrength").value),
+    price:Number(document.getElementById("squadPrice").value),
+    formation:document.getElementById("formation").value,
+    platform:document.getElementById("platform").value,
+    details:document.getElementById("playerDetails").value.trim(),
+    seller:seller,
+    image:selectedPhoto || "https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&w=800&q=80",
+    sample:false
+  };
+
+  const updated=[listing,...squads];
+  if(!saveStore("efk_squads",updated))return;
+  squads=updated;
+  selectedPhoto="";
+  e.target.reset();
+  document.getElementById("photoPreview").classList.add("hidden");
+  document.getElementById("sellMessage").textContent=
+    "Listing saved in this browser. It is not yet visible to other website visitors.";
+  renderSquads();
+  document.getElementById("market").scrollIntoView({behavior:"smooth"});
+});
+
+/* CUSTOMER REMARKS */
+function renderReviews(){
+  const area=document.getElementById("reviewList");
+  if(!reviews.length){
+    area.innerHTML='<p class="small">No customer remarks yet. Share the first one!</p>';
+    return;
+  }
+  area.innerHTML=reviews.map(r=>`
+    <div class="review">
+      <strong>${esc(r.name)}</strong>
+      <p>${"⭐".repeat(r.rating)}</p>
+      <p>${esc(r.text)}</p>
+    </div>
+  `).join("");
+}
+
+document.getElementById("reviewForm").addEventListener("submit",e=>{
+  e.preventDefault();
+  const item={
+    name:document.getElementById("reviewName").value.trim(),
+    rating:Number(document.getElementById("reviewRating").value),
+    text:document.getElementById("reviewText").value.trim()
+  };
+  const updated=[item,...reviews];
+  if(!saveStore("efk_reviews",updated))return;
+  reviews=updated;
+  e.target.reset();
+  renderReviews();
+});
+
+/* FRIENDS DIRECTORY */
+function renderFriends(){
+  const area=document.getElementById("friendList");
+  if(!friends.length){
+    area.innerHTML='<p class="small">No gaming profiles shared yet.</p>';
+    return;
+  }
+  area.innerHTML=friends.map(f=>`
+    <div class="review">
+      <strong>🎮 ${esc(f.name)}</strong>
+      <p>Username / ID: <b>${esc(f.username)}</b></p>
+      <p>Platform: ${esc(f.platform)}</p>
+      <p>${esc(f.note||"Ready for friendly matches!")}</p>
+    </div>
+  `).join("");
+}
+
+document.getElementById("friendForm").addEventListener("submit",e=>{
+  e.preventDefault();
+  const item={
+    name:document.getElementById("friendName").value.trim(),
+    username:document.getElementById("friendUsername").value.trim(),
+    platform:document.getElementById("friendPlatform").value,
+    note:document.getElementById("friendNote").value.trim()
+  };
+  const updated=[item,...friends];
+  if(!saveStore("efk_friends",updated))return;
+  friends=updated;
+  e.target.reset();
+  renderFriends();
+});
+</script>
+
+</body>
+</html>
